@@ -33,13 +33,6 @@ terraform plan -var-file="vars/dev-west-2.tfvars"
 terraform apply -var-file="vars/dev-west-2.tfvars"
 ```
 
-## Step 3: Commands to get the Jenkins admin password via command line
-```
-chmod 400 <keypair>
-ssh -i <keypair> ec2-user@<public_dns>
-sudo cat /var/lib/jenkins/secrets/initialAdminPassword
-```
-
-## Step 4: Cleanup Terraform Resources
+## Step 3: Cleanup Terraform Resources
 ```
 terraform destroy -var-file="vars/dev-west-2.tfvars"
