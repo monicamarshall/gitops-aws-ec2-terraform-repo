@@ -2,4 +2,4 @@
 
 aws_region = "us-west-2"
 vpc_id     = "vpc-003252929e391fa9d"
-key_name   = "test2"
+key_name   = "raghukey"
