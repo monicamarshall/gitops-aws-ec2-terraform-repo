@@ -5,6 +5,10 @@ Helpful Terraform Links:
 - [Resource: aws_security_group](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group)
 - [Resource: aws_instance](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance)
 
+## Prerequisites: 
+a) Find VPC Id in your specific AWS region
+b) Generate a Key pair (.pem) file. Download and update name of the files in dev-west-2.tfvars file
+
 ## Step 0: Initialize Terraform
 ```
 terraform init
