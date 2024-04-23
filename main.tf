@@ -2,13 +2,13 @@ terraform {
   required_version = ">= 0.12"
 }
 
-provider "aws" {
+provider "aws" { 
   region = var.aws_region
 }
 
 # Security group for SonarQube
 resource "aws_security_group" "sonarqube_sg" {
-  name        = "sonarqube_sg"
+  name        = "sonarqube_security_group"
   description = "Allow SonarQube and SSH Traffic"
   vpc_id      = var.vpc_id
 

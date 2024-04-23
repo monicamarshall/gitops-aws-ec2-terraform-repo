@@ -12,7 +12,6 @@ sudo newgrp docker
 sudo systemctl daemon-reload
 sudo systemctl start docker
 sudo systemctl enable docker
-sudo systemctl status docker
 sudo docker pull sonarqube:9.9-community
 sudo docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:9.9-community
 #where 

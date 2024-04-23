@@ -11,6 +11,7 @@ Before proceeding with the Terraform Steps, ensure you have completed the follow
 
 - **Find VPC ID:**
   - Locate the VPC Id in your specific AWS region where you plan to deploy the resources.
+  - Update the name of the VPC Id in the `dev-west-2.tfvars` file.
 
 - **Generate a Key Pair:**
   - Create a new key pair (.pem file) in the AWS Management Console.
