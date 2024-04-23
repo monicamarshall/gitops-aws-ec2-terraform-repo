@@ -1,4 +1,4 @@
-# AWS EC2 with Docker and SonarQube Creation using Terraform by A Security Guru
+# AWS EC2 with Docker and SonarQube deployed using Terraform - Repo by Raghu
 
 Helpful Terraform Links:
 - [Terraform Language Documentation](https://www.terraform.io/docs/language/index.html)
