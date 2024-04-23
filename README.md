@@ -14,7 +14,7 @@ Before proceeding with the Terraform Steps, ensure you have completed the follow
 
 - **Generate a Key Pair:**
   - Create a new key pair (.pem file) in the AWS Management Console.
-  - Download the .pem file to your local machine.
+  - Download the .pem file to your local machine and place it at the root of this repo.
   - Update the name of the key pair file in the `dev-west-2.tfvars` file to reflect the name of your downloaded key pair.
 
 
