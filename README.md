@@ -14,7 +14,10 @@ Before proceeding with the Terraform Steps, ensure you have completed the follow
   - Update the name of the VPC Id in the `dev-west-2.tfvars` file.
 
 - **Generate a Key Pair:**
-  - Create a new key pair (.pem file) in the AWS Management Console.
+  - Create a new key pair (.pem file) in the AWS Management Console.  Open the EC2 instance dashboard in the
+  - specific region.  In the Network & Security section on the left navigation bar, select Key Pair.  Create 
+  - a new Key Pair.  Download the .pem file and save it in the top directory of the project.  Take the name
+  - the name of the key pair and replace it in the placeholder in the dev-west-2.tfvars` file.
   - Download the .pem file to your local machine and place it at the root of this repo.
   - Update the name of the key pair file in the `dev-west-2.tfvars` file to reflect the name of your downloaded key pair.
 
