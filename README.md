@@ -45,4 +45,6 @@ terraform apply -replace=aws_instance.sonarqube
 
 # (or) Option B: taint then apply
 terraform taint aws_instance.sonarqube
+
 terraform apply
+``` 
