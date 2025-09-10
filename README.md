@@ -37,6 +37,7 @@ terraform apply -var-file="vars/dev-west-2.tfvars"
 ## Step 3: Cleanup Terraform Resources
 ```
 terraform destroy -var-file="vars/dev-west-2.tfvars"
+```
 
 ## Step 4: Upgrade Sonarqube
 ``` 
