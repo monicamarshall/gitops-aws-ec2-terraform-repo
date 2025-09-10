@@ -1,24 +1,41 @@
 #!/bin/bash
+set -euo pipefail
 
-# Shell script to install Docker and SonarQube on EC2 instance
-sudo yum update
-sudo yum upgrade -y
-sudo dnf install java-17-amazon-corretto-devel -y
-sudo yum install git -y
-sudo yum install nodejs npm -y
-sudo yum install docker -y
-sudo usermod -aG docker $USER
-sudo newgrp docker
-sudo systemctl daemon-reload
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo docker pull sonarqube:9.9-community
-sudo docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:9.9-community
-#where 
-#-d: Runs the container in the background.
-#--name sonarqube: Sets the name of the container to sonarqube.
-#-e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true: Disables the Elasticsearch bootstrap checks to prevent SonarQube from failing to start.
-#-p 9000:9000: Maps port 9000 on the EC2 instance to port 9000 in the container.
-#sonarqube:9.9-community: Uses the sonarqube:9.9-community image to create the container.
+# --- OS update & Docker ---
+yum update -y
+# Amazon Linux 2: Docker from extras
+amazon-linux-extras install docker -y || yum install -y docker
+systemctl enable docker
+systemctl start docker
 
+# --- Kernel / limits for embedded Elasticsearch ---
+# SonarQube requires these on the host
+sysctl -w vm.max_map_count=262144
+sysctl -w fs.file-max=65536
+# make persistent
+grep -q "vm.max_map_count" /etc/sysctl.conf || echo "vm.max_map_count=262144" >> /etc/sysctl.conf
+grep -q "fs.file-max" /etc/sysctl.conf || echo "fs.file-max=65536" >> /etc/sysctl.conf
 
+# --- Docker volumes (persist data across upgrades) ---
+docker volume create sonarqube_data >/dev/null
+docker volume create sonarqube_extensions >/dev/null
+docker volume create sonarqube_logs >/dev/null
+
+# --- Stop/remove old container if present ---
+docker rm -f sonarqube 2>/dev/null || true
+
+# --- Pull a supported Community Build image ---
+# TIP: Pin a specific tag for repeatability.
+# You can also use: sonarqube:community  (moving tag)
+SONAR_TAG="sonarqube:25.9.0.112764-community"
+docker pull "$SONAR_TAG"
+
+# --- Run SonarQube ---
+docker run -d --name sonarqube \
+  --restart unless-stopped \
+  -p 9000:9000 \
+  --ulimit nofile=65536:65536 \
+  -v sonarqube_data:/opt/sonarqube/data \
+  -v sonarqube_extensions:/opt/sonarqube/extensions \
+  -v sonarqube_logs:/opt/sonarqube/logs \
+  "$SONAR_TAG"

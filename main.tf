@@ -2,6 +2,11 @@ terraform {
   required_version = ">= 0.12"
 }
 
+
+
+
+
+
 provider "aws" { 
   region = var.aws_region
 }
@@ -62,15 +67,27 @@ data "aws_ami" "amazon_linux" {
   owners = ["amazon"]
 }
 
+#resource "aws_instance" "sonarqube" {
+#  ami           = data.aws_ami.amazon_linux.id
+#  instance_type = "t2.large"
+#  key_name      = var.key_name
+#  security_groups = [aws_security_group.sonarqube_sg.name]
+
+# user_data = file("install_sonarqube.sh")
+
+#  tags = {
+#    Name = "SonarQube Instance"
+#  }
+
+
 resource "aws_instance" "sonarqube" {
-  ami           = data.aws_ami.amazon_linux.id
-  instance_type = "t2.large"
-  key_name      = var.key_name
-  security_groups = [aws_security_group.sonarqube_sg.name]
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.large"
+  key_name               = var.key_name
+  vpc_security_group_ids = [aws_security_group.sonarqube_sg.id]
 
   user_data = file("install_sonarqube.sh")
 
-  tags = {
-    Name = "SonarQube Instance"
-  }
+  tags = { Name = "SonarQube Instance" }
 }
+
